@@ -3,11 +3,13 @@ import { LandingPage } from "../components/styled/LandingPage.styled";
 import useInputState from "../hooks/useInputState";
 import axios from "../lib/axios";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [authfield, changeAuthfield, resetAuthfield] = useInputState("");
   const [password, changePassword, resetPassword] = useInputState("");
   const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
 
   const onFormSubmit = async (event) => {
     event.preventDefault();
@@ -23,6 +25,7 @@ const Home = () => {
             userId: res.data.userId,
           };
         });
+        navigate("/dashboard");
       })
       .catch((error) => {
         console.log(error);
@@ -34,6 +37,7 @@ const Home = () => {
       <h1>GymHood</h1>
       <form action="" onSubmit={onFormSubmit}>
         <div className="form-box">
+          <h2>Sign in</h2>
           <div className="input-box">
             <label htmlFor="username">Username</label>
             <input type="text" name="username" id="username" onChange={changeAuthfield} />
