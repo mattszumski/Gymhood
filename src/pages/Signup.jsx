@@ -3,10 +3,11 @@ import { LandingPage } from "../components/styled/LandingPage.styled";
 import useInputState from "../hooks/useInputState";
 import axios from "../lib/axios";
 import useAuth from "../hooks/useAuth";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Home = () => {
-  const [authfield, changeAuthfield, resetAuthfield] = useInputState("");
+const Signup = () => {
+  const [username, changeUsername, resetUsername] = useInputState("");
+  const [email, changeEmail, resetEmail] = useInputState("");
   const [password, changePassword, resetPassword] = useInputState("");
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Home = () => {
   const onFormSubmit = async (event) => {
     event.preventDefault();
     const response = axios
-      .post("/auth/login", { authfield, password })
+      .post("/auth/signup", { username, email, password })
       .then((res) => {
         console.log(res);
         setAuth((prev) => {
@@ -25,7 +26,7 @@ const Home = () => {
             userId: res.data.userId,
           };
         });
-        navigate("/dashboard");
+        navigate("/profile/edit");
       })
       .catch((error) => {
         console.log(error);
@@ -35,30 +36,28 @@ const Home = () => {
   return (
     <LandingPage>
       <h1>GymHood</h1>
-      <div className="form-box">
-        <h2>Sign in</h2>
-        <form action="" onSubmit={onFormSubmit}>
+      <form action="" onSubmit={onFormSubmit}>
+        <div className="form-box">
+          <h2>Sign up</h2>
           <div className="input-box">
             <label htmlFor="username">Username</label>
-            <input type="text" name="username" id="username" onChange={changeAuthfield} />
+            <input type="text" name="username" id="username" onChange={changeUsername} />
+          </div>
+          <div className="input-box">
+            <label htmlFor="email">Email</label>
+            <input type="email" name="email" id="email" onChange={changeEmail} />
           </div>
           <div className="input-box">
             <label htmlFor="password">Password</label>
             <input type="password" name="password" id="password" onChange={changePassword} />
           </div>
           <div className="button-box">
-            <input className="action-button" type="submit" value="Sign in" />
+            <input className="action-button" type="submit" value="Sign up" />
           </div>
-        </form>
-        <div className="button-box">
-          <p>Don't have an account?</p>
-          <NavLink to={"/signup"}>
-            <input className="action-button" type="button" value="Sign up" />
-          </NavLink>
         </div>
-      </div>
+      </form>
     </LandingPage>
   );
 };
 
-export default Home;
+export default Signup;

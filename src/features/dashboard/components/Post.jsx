@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { Post as PostContainer } from "../../../components/styled/Post.styled";
 
 const Post = (props) => {
@@ -9,7 +10,9 @@ const Post = (props) => {
   return (
     <PostContainer>
       <div className="title">
-        <p>Post by {username}</p>
+        <NavLink to={`/profile/${userId}`}>
+          <p>Post by {username}</p>
+        </NavLink>
         <p>created at {createdDateString}</p>
       </div>
       <div className="body">{text}</div>
