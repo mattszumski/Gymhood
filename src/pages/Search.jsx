@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import SearchListItem from "../features/dashboard/components/SearchListItem";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Search = () => {
@@ -9,7 +10,7 @@ const Search = () => {
 
   useEffect(() => {
     axiosPrivate
-      .get("/user/", { query: state.query })
+      .get("/user", { params: { q: state.query } })
       .then((result) => {
         setData(result.data);
       })
@@ -18,7 +19,23 @@ const Search = () => {
       });
   }, []);
 
-  return <div>{`You've serached for ${state.query}`}</div>;
+  return data.length === 0 ? (
+    <div>No results</div>
+  ) : (
+    <div>
+      {data.map((item) => {
+        const props = {
+          id: item.id,
+          username: item.username,
+          firstname: item.firstname,
+          lastname: item.lastname,
+          gym: item.userProfile.gym,
+          city: item.userProfile.city,
+        };
+        return <SearchListItem key={item.id} {...props} />;
+      })}
+    </div>
+  );
 };
 
 export default Search;

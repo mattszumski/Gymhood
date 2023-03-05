@@ -9,23 +9,27 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const Dashboard = () => {
   const [posts, setPosts] = useState([]);
+  const [needRefresh, setNeedRefresh] = useState(true);
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    const fetchedPosts = axiosPrivate
-      .get("/post/user/my")
-      .then((result) => {
-        setPosts(result.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (needRefresh) {
+      const fetchedPosts = axiosPrivate
+        .get("/post/user/my")
+        .then((result) => {
+          setPosts(result.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
+    setNeedRefresh(false);
     return () => {
       //code to run when component unmounts
     };
-  }, []);
+  }, [needRefresh]);
 
   //get all post of his friends to fill the feed
   //menu to check profile
@@ -39,6 +43,7 @@ const Dashboard = () => {
       <Navbar />
       <DashboardBackground className="dashboard">
         <DashboardStyled>
+          <CreatePost refreshFn={setNeedRefresh} />
           {posts.map((post) => {
             return <Post key={post.id} post={post} />;
           })}
