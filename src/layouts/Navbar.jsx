@@ -16,6 +16,9 @@ const Navbar = () => {
       <div>
         <NavLink to={"/settings"}>Settings</NavLink>
       </div>
+      <div>
+        <NavLink to={"/friendRequests"}>Friend Requests</NavLink>
+      </div>
       <SearchBar />
     </NavDiv>
   );

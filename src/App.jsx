@@ -9,6 +9,7 @@ import EditProfile from "./features/profile/EditProfile";
 import EditSettings from "./features/profile/EditSettings";
 import Profile from "./features/profile/Profile";
 import Search from "./pages/Search";
+import FriendRequests from "./features/friends/FriendRequests";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                 </Route>
                 <Route path="/settings" element={<EditSettings />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/friendRequests" element={<FriendRequests />} />
               </Route>
             </Routes>
           </BrowserRouter>

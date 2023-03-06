@@ -23,6 +23,17 @@ const Profile = () => {
 
   //check if user and profile user are friends
 
+  const sendFriendRequestHandler = (event) => {
+    axiosPrivate
+      .post("/friend/request", { recipientId: id })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     axiosPrivate
       .get(`/user/data/${id}`)
@@ -75,7 +86,8 @@ const Profile = () => {
               <p>{userData.username}</p>
               <p>{userData.firstname ? userData.firstname : ""}</p>
               <p>{userData.lastname ? userData.lastname : ""}</p>
-              {!userOwnProfile && !userFriend && <p>Add Friend</p>}
+              {!userOwnProfile && !userFriend && <button onClick={sendFriendRequestHandler}>Add Friend</button>}
+              {!userOwnProfile && userFriend && <p>Friends</p>}
             </div>
           </div>
           <div className="friends-box">FRIENDS BOX</div>
