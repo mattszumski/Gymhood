@@ -10,6 +10,7 @@ import EditSettings from "./features/profile/EditSettings";
 import Profile from "./features/profile/Profile";
 import Search from "./pages/Search";
 import FriendRequests from "./features/friends/FriendRequests";
+import UploadPicture from "./features/fileHandling/UploadPicture";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/settings" element={<EditSettings />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/friendRequests" element={<FriendRequests />} />
+                <Route path="/upload" element={<UploadPicture />} />
               </Route>
             </Routes>
           </BrowserRouter>

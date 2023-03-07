@@ -19,6 +19,9 @@ const Navbar = () => {
       <div>
         <NavLink to={"/friendRequests"}>Friend Requests</NavLink>
       </div>
+      <div>
+        <NavLink to={"/upload"}>Upload</NavLink>
+      </div>
       <SearchBar />
     </NavDiv>
   );
