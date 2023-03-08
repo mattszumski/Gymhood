@@ -1,6 +1,16 @@
 import React, { useState } from "react";
+import { v4 as uuid } from "uuid";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Navbar from "../../layouts/Navbar";
+import ImagePreview from "./components/imagePreview";
+import { UploadFormContainer } from "./components/styled/UploadForm.styled";
+
+//TODO:
+// Component will be used in several places (profile, posts, adding profile picture(?))
+// what parameters will be best for input?
+// 1. callback function after sucess
+// 2. userId, for sending data
+// 3. ???
 
 const UploadPicture = () => {
   const [files, setFiles] = useState([]);
@@ -10,11 +20,15 @@ const UploadPicture = () => {
     Promise.all(
       Array.from(event.target.files).map(async (file) => {
         file.src = await renderPreview(file);
+        file.tempId = uuid();
         return file;
       })
     )
       .then((proccessedImages) => {
-        setFiles(proccessedImages);
+        // setFiles(proccessedImages);
+        setFiles((prev) => {
+          return [...prev, ...proccessedImages];
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -44,30 +58,29 @@ const UploadPicture = () => {
     console.log(formData);
 
     axiosPrivate.post("/file/", formData, { headers: { "Content-Type": "multipart/form-data" } });
+    //TODO: do something when success, give information when error
   };
 
-  const handleLoad = (event) => {
-    console.log("Loading");
-    console.log(event);
+  const handleRemove = (tempId) => {
+    setFiles((prev) => {
+      return prev.filter((file) => {
+        return file.tempId !== tempId;
+      });
+    });
   };
+
   return (
     <div>
       <Navbar />
-      <label htmlFor="files">
-        <div style={{ border: "1px solid black", width: "300px", padding: "1rem" }}>Upload files</div>
-      </label>
+      <UploadFormContainer>
+        <label htmlFor="files">Click to upload</label>
+      </UploadFormContainer>
       <input type="file" name="files" id="files" multiple accept="image/jpg, image/jpeg, image/png" onChange={fileUploadHandler} hidden />
       {files.length > 0 &&
         files.map((imageFile) => {
-          return (
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <img src={imageFile.src} width="300" /> Filename: {imageFile.name}
-              <button>Delete</button>
-            </div>
-          );
+          return <ImagePreview key={imageFile.tempId} imageFile={imageFile} handleRemove={handleRemove} />;
         })}
       <button onClick={handleSendFiles}>Upload</button>
-      {/* <img src={`http://localhost:4000/media/photo.png`} width="300" onLoad={handleLoad} /> */}
     </div>
   );
 };
