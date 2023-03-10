@@ -1,20 +1,38 @@
 import styled from "styled-components";
-import backgroundImage from "./../../assets/gh-hero.jpg";
 
 export const Post = styled.div`
   width: 25vw;
-  padding: 0.5rem;
+  padding-bottom: 0.5rem;
   margin: 1rem;
-  background-color: #123456;
+  margin-bottom: 3rem;
+  background-color: #414141;
   color: #fff;
   display: flex;
   flex-direction: column;
+  border: 0.5px solid #606060;
 
   .title {
     font-size: 0.75rem;
     background-color: rgba(255, 255, 255, 0.5);
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 25px;
+      margin-right: 1rem;
+    }
+
+    .createdUser {
+      margin-right: 1rem;
+    }
+
+    .createdTimestamp {
+      margin-right: 0;
+      margin-left: auto;
+    }
   }
 
   .body {
@@ -30,10 +48,14 @@ export const Post = styled.div`
 
     .btn {
       flex-grow: 1;
+      max-width: 40%;
       text-align: center;
       color: #fff;
       background-color: rgba(25, 25, 25, 0.25);
       border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      margin: 0.25rem 1rem;
 
       :hover {
         background-color: #fff;

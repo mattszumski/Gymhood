@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Post as PostContainer } from "../../../components/styled/Post.styled";
+import defaultThumbnail from "../../../assets/default-profile-pic-t.png";
 
 const Post = (props) => {
   const { id, text, createdAt } = props.post;
@@ -11,9 +12,10 @@ const Post = (props) => {
     <PostContainer>
       <div className="title">
         <NavLink to={`/profile/${userId}`}>
-          <p>Post by {username}</p>
+          <img className={"profile"} src={defaultThumbnail} />
         </NavLink>
-        <p>created at {createdDateString}</p>
+        <p className="createdUser">By {username}</p>
+        <p className="createdTimestamp">Created at {createdDateString}</p>
       </div>
       <div className="body">{text}</div>
       <div className="actions">

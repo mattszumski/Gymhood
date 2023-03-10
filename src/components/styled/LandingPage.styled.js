@@ -2,7 +2,8 @@ import styled from "styled-components";
 import backgroundImage from "./../../assets/gh-hero.jpg";
 
 export const LandingPage = styled.div`
-  background-image: url(${backgroundImage});
+  background: url(${backgroundImage}) no-repeat center center fixed;
+  background-size: cover;
   min-height: 100vh;
   color: #fff;
   display: flex;
