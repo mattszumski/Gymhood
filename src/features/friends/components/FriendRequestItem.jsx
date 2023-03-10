@@ -10,10 +10,7 @@ const FriendRequestItem = (props) => {
   //handle accept request
   const handleAccept = (event) => {
     setIsAccepted(true);
-    axiosPrivate.post("/friend/", { friendId: id }).catch((error) => {
-      console.log(error);
-    });
-    axiosPrivate.delete("/friend/request", { params: { senderId: id } }).catch((error) => {
+    axiosPrivate.post("/friend/request/accept", { recipientId: id }).catch((error) => {
       console.log(error);
     });
   };

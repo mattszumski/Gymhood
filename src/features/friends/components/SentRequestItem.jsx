@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const SentRequestItem = (props) => {
-  const { username } = props.user;
+  const { id, username } = props.user;
   const [isCanceled, setIsCanceled] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   //handle cancel request
   const handleCancel = (event) => {
+    axiosPrivate
+      .post("/friend/request/cancel", { recipientId: id })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setIsCanceled(true);
-    //TODO: no proper route on the backend
   };
 
   return !isCanceled ? (
