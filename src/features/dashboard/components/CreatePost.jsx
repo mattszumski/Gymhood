@@ -4,7 +4,6 @@ import useInputState from "../../../hooks/useInputState";
 import { PostCreationContainer } from "./styled/CreatePost.styled";
 
 const CreatePost = (props) => {
-  console.log(props);
   const { refreshFn } = props;
   const [text, setText, resetText] = useInputState("");
   const axiosPrivate = useAxiosPrivate();
@@ -13,7 +12,6 @@ const CreatePost = (props) => {
     axiosPrivate
       .post("/post/", { text })
       .then((result) => {
-        console.log(result);
         resetText();
         refreshFn(true);
       })
