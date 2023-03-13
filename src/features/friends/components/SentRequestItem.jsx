@@ -19,12 +19,12 @@ const SentRequestItem = (props) => {
   };
 
   return !isCanceled ? (
-    <div>
+    <div className="request-sent">
       <p>Request pending for: {username}</p>
       <button onClick={handleCancel}>Cancel</button>
     </div>
   ) : (
-    <div>Friend request for user {username} has been canceled</div>
+    <div className="request-canceled">Friend request for user {username} has been canceled</div>
   );
 };
 

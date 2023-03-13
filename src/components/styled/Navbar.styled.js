@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const Navbar = styled.div`
+export const Navbar = styled.nav`
   border: none;
-  height: 3.5em;
-  width: 100vw;
-  max-width: 100%;
-  background-color: #414141;
+  height: var(--nav-size);
+  background-color: var(--bg);
+  padding: 0 1rem;
+  border-bottom: 1px solid black;
   display: flex;
   justify-content: space-around;
 
@@ -19,9 +19,17 @@ export const Navbar = styled.div`
 
   div {
     align-self: center;
-    a {
-      color: #fff;
-      text-decoration: none;
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 25px;
+      margin-right: 1rem;
     }
+  }
+
+  .user-info {
+    display: flex;
+    color: #fff;
   }
 `;

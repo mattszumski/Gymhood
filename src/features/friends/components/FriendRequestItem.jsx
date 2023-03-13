@@ -23,11 +23,11 @@ const FriendRequestItem = (props) => {
   };
 
   return isAccepted ? (
-    <div>Accepted</div>
+    <div className="request-accepted">Accepted</div>
   ) : isRefused ? (
-    <div>Refused</div>
+    <div className="request-refused">Refused</div>
   ) : (
-    <div>
+    <div className="request-received">
       <h4>New request from:</h4>
       <p>{username}</p>
       <button onClick={handleAccept}>Accept</button>

@@ -4,7 +4,9 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Navbar from "../../layouts/Navbar";
 import Post from "../dashboard/components/Post";
-import { ProfilePageContainer } from "../dashboard/components/styled/ProfilePage.styled";
+import { ProfilePageContainer } from "./components/styled/ProfilePage.styled";
+import { ProfileInfoContainer } from "./components/styled/ProfileInfoContainer.styled";
+import { ProfileHeader } from "./components/ProfileHeader";
 
 const Profile = () => {
   //get profile data for user id
@@ -52,7 +54,7 @@ const Profile = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -74,8 +76,8 @@ const Profile = () => {
       </style>
       <ProfilePageContainer>
         <div className="columns-left">
-          <div className="profile-box">
-            <div className="profile-photo-container">PHOTO</div>
+          <ProfileInfoContainer>
+            <ProfileHeader userData={userData} />
             <div className="info-container">
               <p>{userData?.userProfile?.city ? `City: ${userData.userProfile.city}` : ""}</p>
               <p>{userData?.userProfile?.gym ? `Gym: ${userData.userProfile.gym}` : ""}</p>
@@ -83,13 +85,10 @@ const Profile = () => {
               <p>{userData?.userProfile?.interests ? `Interests: ${userData.userProfile.interests}` : ""}</p>
             </div>
             <div className="userdata-container">
-              <p>{userData.username}</p>
-              <p>{userData.firstname ? userData.firstname : ""}</p>
-              <p>{userData.lastname ? userData.lastname : ""}</p>
               {!userOwnProfile && !userFriend && <button onClick={sendFriendRequestHandler}>Add Friend</button>}
               {!userOwnProfile && userFriend && <p>Friends</p>}
             </div>
-          </div>
+          </ProfileInfoContainer>
           <div className="friends-box">FRIENDS BOX</div>
           <div className="photos-box">PHOTOS BOX</div>
         </div>
