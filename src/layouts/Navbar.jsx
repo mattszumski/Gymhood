@@ -11,9 +11,11 @@ import personIcon from "../assets/person.svg";
 import friendIcon from "../assets/friends.svg";
 import DropdownMenu from "../components/DropdownMenu";
 import DropdownItem from "../components/DropdownItem";
+import useUserData from "../hooks/useUserData";
 
 const Navbar = () => {
   const { auth } = useAuth();
+  const { userData } = useUserData();
   return (
     <NavDiv>
       <div id="logo-container">
@@ -28,15 +30,17 @@ const Navbar = () => {
 
       <NavbarRightMenu>
         <NavItem icon={<img src={friendIcon} />} linkTo={`/friendRequests`} />
-        <NavItem icon={<img src={settingsIcon} />} linkTo={`/settings`} />
         <NavItem icon={<img src={personIcon} />}>
           <DropdownMenu>
-            <DropdownItem leftIcon={<img className={"profile-pic"} src={defaultThumbnail} />} linkTo={`/profile/${auth.userId}`}>
+            <DropdownItem leftIcon={<img className={"profile-pic"} src={userData.profilePhoto ? userData.profilePhotoPath : defaultThumbnail} />} linkTo={`/profile/${auth.userId}`}>
               <p>Logged in as {auth.username}</p>
             </DropdownItem>
             <DropdownItem linkTo={`/profile/${auth.userId}`}>Profile</DropdownItem>
             <DropdownItem linkTo={`/dashboard`}>Dashboard</DropdownItem>
             <DropdownItem linkTo={`/profile/edit`}>Edit profile data</DropdownItem>
+            <DropdownItem leftIcon={<img src={settingsIcon} />} linkTo={`/settings`}>
+              Settings
+            </DropdownItem>
           </DropdownMenu>
         </NavItem>
       </NavbarRightMenu>

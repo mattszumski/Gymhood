@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import defaultThumbnail from "../../../assets/default-profile-pic-t.png";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import getConsts from "../../../utils/getConsts";
+import { ProfileHeader as StyledHeader } from "./styled/ProfileHeader.styled";
+import addIcon from "../assets/add_a_photo.svg";
 
 export const ProfileHeader = (props) => {
   const { username, firstname, lastname, userProfile } = props.userData;
@@ -26,12 +28,17 @@ export const ProfileHeader = (props) => {
   }, [userProfile?.profilePhotoId]);
 
   return (
-    <>
-      <div className="profile-photo-container">{profilePhoto}</div>
+    <StyledHeader>
+      <div className="profile-photo-container">
+        {profilePhoto}
+        <div className="upload-button">
+          <img src={addIcon} width="20px" />
+        </div>
+      </div>
       <h2>{username}</h2>
       <h3>
         {firstname} {lastname}
       </h3>
-    </>
+    </StyledHeader>
   );
 };

@@ -31,11 +31,7 @@ const Dashboard = () => {
     };
   }, [needRefresh]);
 
-  //get all post of his friends to fill the feed
-  //menu to check profile
   //search for friends: by name, gym, city etc. (profile information)
-  //sending friend requests
-  // accepting/rejecting friend requests
   //showing/checking friends
 
   return (

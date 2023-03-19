@@ -7,6 +7,7 @@ import Post from "../dashboard/components/Post";
 import { ProfilePageContainer } from "./components/styled/ProfilePage.styled";
 import { ProfileInfoContainer } from "./components/styled/ProfileInfoContainer.styled";
 import { ProfileHeader } from "./components/ProfileHeader";
+import FriendsContainer from "./components/FriendsContainer";
 
 const Profile = () => {
   //get profile data for user id
@@ -89,13 +90,15 @@ const Profile = () => {
               {!userOwnProfile && userFriend && <p>Friends</p>}
             </div>
           </ProfileInfoContainer>
-          <div className="friends-box">FRIENDS BOX</div>
+          <FriendsContainer userId={id} />
+          {/* <div className="friends-box">FRIENDS BOX</div> */}
           <div className="photos-box">PHOTOS BOX</div>
         </div>
         <div className="columns-right">
           <div className="user-board">
             {userPosts.map((post) => {
-              return <Post key={post.id} post={{ ...post, user: { userId: userData.id, username: userData.username } }} />;
+              // return <Post key={post.id} post={{ ...post, user: { userId: userData.id, username: userData.username } }} />;
+              return <Post key={post.id} post={post} />;
             })}
           </div>
         </div>
