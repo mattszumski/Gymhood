@@ -7,9 +7,12 @@ const ImagePreview = ({ imageFile, handleRemove }) => {
 
   return (
     <ImagePreviewContainer>
-      <img src={imageFile.src} width="300" />
-      <p>Filename: {imageFile.name}</p>
-      <button onClick={handleClick}>Delete</button>
+      <img src={imageFile.src} />
+      <div class="overlay">
+        <div class="text">
+          <button onClick={handleClick}>Delete</button>
+        </div>
+      </div>
     </ImagePreviewContainer>
   );
 };

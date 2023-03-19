@@ -12,8 +12,7 @@ import { UploadFormContainer } from "./components/styled/UploadForm.styled";
 // 2. userId, for sending data
 // 3. ???
 
-const UploadPicture = () => {
-  const [files, setFiles] = useState([]);
+const UploadPicture = ({ multiple, files, setFiles }) => {
   const axiosPrivate = useAxiosPrivate();
 
   const fileUploadHandler = (event) => {
@@ -55,8 +54,6 @@ const UploadPicture = () => {
       formData.append("files", val, val.name);
     });
 
-    console.log(formData);
-
     axiosPrivate.post("/file/", formData, { headers: { "Content-Type": "multipart/form-data" } });
     //TODO: do something when success, give information when error
   };
@@ -71,16 +68,16 @@ const UploadPicture = () => {
 
   return (
     <div>
-      <Navbar />
       <UploadFormContainer>
-        <label htmlFor="files">Click to upload</label>
+        <input type="file" name="files" id="files" multiple={multiple} accept="image/jpg, image/jpeg, image/png" onChange={fileUploadHandler} hidden />
+        <div className="preview-container">
+          {files.length > 0 &&
+            files.map((imageFile) => {
+              return <ImagePreview key={imageFile.tempId} imageFile={imageFile} handleRemove={handleRemove} />;
+            })}
+        </div>
+        <label htmlFor="files">Click to add picture</label>
       </UploadFormContainer>
-      <input type="file" name="files" id="files" multiple accept="image/jpg, image/jpeg, image/png" onChange={fileUploadHandler} hidden />
-      {files.length > 0 &&
-        files.map((imageFile) => {
-          return <ImagePreview key={imageFile.tempId} imageFile={imageFile} handleRemove={handleRemove} />;
-        })}
-      <button onClick={handleSendFiles}>Upload</button>
     </div>
   );
 };

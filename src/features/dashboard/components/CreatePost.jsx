@@ -1,30 +1,24 @@
-import React from "react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import useInputState from "../../../hooks/useInputState";
+import React, { useState } from "react";
+
+import CreatePostModal from "./CreatePostModal";
 import { PostCreationContainer } from "./styled/CreatePost.styled";
 
 const CreatePost = (props) => {
   const { refreshFn } = props;
-  const [text, setText, resetText] = useInputState("");
-  const axiosPrivate = useAxiosPrivate();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleCreatePost = (event) => {
-    axiosPrivate
-      .post("/post/", { text })
-      .then((result) => {
-        resetText();
-        refreshFn(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   // send request to add new post and refresh the dashboard for user
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <PostCreationContainer>
-      <textarea placeholder="Start typing new post..." onChange={setText} value={text}></textarea>
-      <button onClick={handleCreatePost}>Add post</button>
+      {isOpen && <CreatePostModal refreshFn={refreshFn} closeFn={closeModal} />}
+      <textarea placeholder="Start typing new post..." onFocus={openModal}></textarea>
     </PostCreationContainer>
   );
 };
