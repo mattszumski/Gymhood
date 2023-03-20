@@ -41,6 +41,12 @@ export const Post = styled.div`
     padding: 1.5rem 0.5rem;
   }
 
+  .media {
+    img {
+      width: 150px;
+    }
+  }
+
   .actions {
     padding: 0.25rem;
     display: flex;

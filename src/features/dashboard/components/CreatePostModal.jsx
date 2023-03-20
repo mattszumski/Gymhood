@@ -14,9 +14,6 @@ const CreatePostModal = (props) => {
   const axiosPrivate = useAxiosPrivate();
 
   const handleCreatePost = (event) => {
-    console.log(files);
-    console.log(text);
-    // return;
     const formData = new FormData();
     formData.append("text", text);
     files.forEach((val) => {
@@ -28,20 +25,12 @@ const CreatePostModal = (props) => {
       .then((result) => {
         resetText();
         refreshFn(true);
+        closeFn();
       })
       .catch((error) => {
         console.log(error);
       });
     //TODO: do something when success, give information when error
-    // axiosPrivate
-    //   .post("/post/", { text })
-    //   .then((result) => {
-    //     resetText();
-    //     refreshFn(true);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   return ReactDom.createPortal(

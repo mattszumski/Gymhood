@@ -3,11 +3,13 @@ import { Post as PostContainer } from "../../../components/styled/Post.styled";
 import defaultThumbnail from "../../../assets/default-profile-pic-t.png";
 import getConst from "../../../utils/getConsts";
 import format from "date-fns/format";
+import { useMemo } from "react";
 
 const Post = (props) => {
   const { id, text, createdAt } = props.post;
   const { id: userId, username } = props.post.user;
   const imgSrcPath = props.post.user?.userProfile?.File?.path;
+  const base_url = getConst("BASE_URL");
 
   const createdDateString = format(new Date(Date.parse(createdAt)), "dd-MM-yyyy\tHH:mm");
   // const createdDateString = new Date(Date.parse(createdAt)).toLocaleDateString({ year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric" });
@@ -16,12 +18,20 @@ const Post = (props) => {
     <PostContainer>
       <div className="title">
         <NavLink to={`/profile/${userId}`}>
-          <img className={"profile"} src={imgSrcPath ? getConst("BASE_URL") + imgSrcPath.replace("/media/", "/media/md-") : defaultThumbnail} />
+          <img className={"profile"} src={imgSrcPath ? base_url + imgSrcPath.replace("/media/", "/media/md-") : defaultThumbnail} />
         </NavLink>
         <p className="createdUser">By {username}</p>
         <p className="createdTimestamp">Created at {createdDateString}</p>
       </div>
-      <div className="body">{text}</div>
+      {text && <div className="body">{text}</div>}
+      {props.post?.Files && (
+        <div className="media">
+          {props.post.Files.map((photo) => {
+            return <img key={photo.id} src={base_url + photo.path.replace("/media/", "/media/md-")} />;
+          })}
+        </div>
+      )}
+
       <div className="actions">
         <div className="btn">Like</div>
         <div className="btn">Comment</div>
