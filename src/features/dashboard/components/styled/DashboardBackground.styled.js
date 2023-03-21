@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import backgroundImage from "../../../assets/dashboard-background.png";
+import backgroundImage from "../../../../assets/dashboard-background.png";
 
 export const DashboardBackground = styled.div`
   display: flex;

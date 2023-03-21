@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DashboardBackground } from "./components/DashboardBackground.styled";
+import { DashboardBackground } from "./components/styled/DashboardBackground.styled";
 import { Dashboard as DashboardStyled } from "./components/styled/Dashboard.styled";
 import Post from "./components/Post";
 import Navbar from "../../layouts/Navbar";

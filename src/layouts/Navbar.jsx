@@ -23,9 +23,6 @@ const Navbar = () => {
           <img id="logo" src={logo} />
         </NavLink>
       </div>
-      <div>
-        <NavLink to={"/upload"}>Upload</NavLink>
-      </div>
       <SearchBar />
 
       <NavbarRightMenu>

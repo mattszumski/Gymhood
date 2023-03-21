@@ -20,7 +20,7 @@ const FriendsContainer = (props) => {
 
   return (
     <StyledContainer>
-      {friends.length &&
+      {friends.length > 0 &&
         friends.map((friendData) => {
           const userData = { userId: friendData.id, username: friendData.username, firstname: friendData.firstname, lastname: friendData.lastname, imgPath: friendData.userProfile?.File?.path };
           return <FriendBox userData={userData} />;

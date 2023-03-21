@@ -3,10 +3,11 @@ import defaultThumbnail from "../../../assets/default-profile-pic-t.png";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import getConsts from "../../../utils/getConsts";
 import { ProfileHeader as StyledHeader } from "./styled/ProfileHeader.styled";
-import addIcon from "../assets/add_a_photo.svg";
+import ChooseProfilePhoto from "./ChooseProfilePhoto";
 
 export const ProfileHeader = (props) => {
   const { username, firstname, lastname, userProfile } = props.userData;
+  const isOwnProfile = props.isOwnProfile;
   const [profilePhoto, setProfilePhoto] = useState(null);
   const axiosPrivate = useAxiosPrivate();
   //   const profilePhoto = userProfile?.profilePhotoId ? "GET URL" : <img src={defaultThumbnail} />;
@@ -32,7 +33,7 @@ export const ProfileHeader = (props) => {
       <div className="profile-photo-container">
         {profilePhoto}
         <div className="upload-button">
-          <img src={addIcon} width="20px" />
+          <ChooseProfilePhoto />
         </div>
       </div>
       <h2>{username}</h2>

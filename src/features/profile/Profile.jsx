@@ -78,7 +78,7 @@ const Profile = () => {
       <ProfilePageContainer>
         <div className="columns-left">
           <ProfileInfoContainer>
-            <ProfileHeader userData={userData} />
+            <ProfileHeader userData={userData} isOwnProfile={userOwnProfile} />
             <div className="info-container">
               <p>{userData?.userProfile?.city ? `City: ${userData.userProfile.city}` : ""}</p>
               <p>{userData?.userProfile?.gym ? `Gym: ${userData.userProfile.gym}` : ""}</p>

@@ -4,6 +4,7 @@ import defaultThumbnail from "../../../assets/default-profile-pic-t.png";
 import getConst from "../../../utils/getConsts";
 import format from "date-fns/format";
 import { useMemo } from "react";
+import PostImage from "./PostImage";
 
 const Post = (props) => {
   const { id, text, createdAt } = props.post;
@@ -12,7 +13,6 @@ const Post = (props) => {
   const base_url = getConst("BASE_URL");
 
   const createdDateString = format(new Date(Date.parse(createdAt)), "dd-MM-yyyy\tHH:mm");
-  // const createdDateString = new Date(Date.parse(createdAt)).toLocaleDateString({ year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric" });
 
   return (
     <PostContainer>
@@ -27,7 +27,7 @@ const Post = (props) => {
       {props.post?.Files && (
         <div className="media">
           {props.post.Files.map((photo) => {
-            return <img key={photo.id} src={base_url + photo.path.replace("/media/", "/media/md-")} />;
+            return <PostImage key={photo.id} postId={id} photo={photo} base_url={base_url} />;
           })}
         </div>
       )}
