@@ -12,10 +12,25 @@ import friendIcon from "../assets/friends.svg";
 import DropdownMenu from "../components/DropdownMenu";
 import DropdownItem from "../components/DropdownItem";
 import useUserData from "../hooks/useUserData";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Navbar = () => {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const { userData } = useUserData();
+  const axiosPrivate = useAxiosPrivate();
+
+  const handleLogout = () => {
+    axiosPrivate
+      .get("/auth/logout")
+      .then((result) => {
+        setAuth({});
+      })
+      .catch((error) => {
+        //TODO: Info for user that logout failed - credentials are still valid and can be used
+        console.log(error);
+      });
+  };
+
   return (
     <NavDiv>
       <div id="logo-container">
@@ -37,6 +52,9 @@ const Navbar = () => {
             <DropdownItem linkTo={`/profile/edit`}>Edit profile data</DropdownItem>
             <DropdownItem leftIcon={<img src={settingsIcon} />} linkTo={`/settings`}>
               Settings
+            </DropdownItem>
+            <DropdownItem linkTo={`/`} handleClick={handleLogout}>
+              Log out
             </DropdownItem>
           </DropdownMenu>
         </NavItem>
