@@ -1,18 +1,50 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Post as PostContainer } from "../../../components/styled/Post.styled";
-import defaultThumbnail from "../../../assets/default-profile-pic-t.png";
-import getConst from "../../../utils/getConsts";
 import format from "date-fns/format";
-import { useMemo } from "react";
+
+import getConst from "../../../utils/getConsts";
+import useInputState from "../../../hooks/useInputState";
+
+import { Post as PostContainer } from "../../../components/styled/Post.styled";
+import { AddCommentBox } from "./styled/AddCommentBox.styled";
+
+import defaultThumbnail from "../../../assets/default-profile-pic-t.png";
 import PostImage from "./PostImage";
+import AddPostComment from "./AddPostComment";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import PostComment from "./PostComment";
 
-const Post = (props) => {
-  const { id, text, createdAt } = props.post;
-  const { id: userId, username } = props.post.user;
-  const imgSrcPath = props.post.user?.userProfile?.File?.path;
+const Post = ({ post }) => {
+  const { id, text, createdAt } = post;
+  const { id: userId, username } = post.user;
+  const imgSrcPath = post.user?.userProfile?.File?.path;
   const base_url = getConst("BASE_URL");
-
   const createdDateString = format(new Date(Date.parse(createdAt)), "dd-MM-yyyy\tHH:mm");
+
+  const axiosPrivate = useAxiosPrivate();
+
+  const [postComments, setPostComments] = useState(post?.PostComments || []);
+  const addComment = (newComment) => {
+    axiosPrivate
+      .post("/post/comment", { postId: id, text: newComment })
+      .then((result) => {
+        if (result) {
+          return true;
+        }
+        return false;
+      })
+      .then((success) => {
+        axiosPrivate.get("/post/comment", { params: { postId: id } }).then((result) => {
+          if (result?.data) {
+            setPostComments(result.data);
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //request comments for this piece from server
+  };
 
   return (
     <PostContainer>
@@ -24,9 +56,9 @@ const Post = (props) => {
         <p className="createdTimestamp">Created at {createdDateString}</p>
       </div>
       {text && <div className="body">{text}</div>}
-      {props.post?.Files && (
+      {post?.Files && (
         <div className="media">
-          {props.post.Files.map((photo) => {
+          {post.Files.map((photo) => {
             return <PostImage key={photo.id} postId={id} photo={photo} base_url={base_url} />;
           })}
         </div>
@@ -35,6 +67,16 @@ const Post = (props) => {
       <div className="actions">
         <div className="btn">Like</div>
         <div className="btn">Comment</div>
+      </div>
+      <div className="comments-container">
+        {/* TODO: Show only 2-3 comments and hide rest into 'show all comments' prompt that will show the rest after click */}
+        {postComments.length > 0 &&
+          postComments.map((comment) => {
+            return <PostComment key={comment.id} comment={comment} />;
+          })}
+      </div>
+      <div className="add-comments-container">
+        <AddPostComment addComment={addComment} />
       </div>
     </PostContainer>
   );

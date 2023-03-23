@@ -10,9 +10,10 @@ const SentRequestItem = (props) => {
     axiosPrivate
       .post("/friend/request/cancel", { recipientId: id })
       .then((result) => {
-        console.log(result);
+        //TODO
       })
       .catch((error) => {
+        //TODO
         console.log(error);
       });
     setIsCanceled(true);

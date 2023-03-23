@@ -7,9 +7,6 @@ import { Container } from "./components/styled/Container.styled";
 import { Page } from "./components/styled/Page.styled";
 
 const FriendRequests = () => {
-  //get received requests with options to accept or refuse
-  //get sent requests
-
   const [receivedRequests, setReceivedRequests] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
   const axiosPrivate = useAxiosPrivate();
@@ -19,7 +16,6 @@ const FriendRequests = () => {
       .get("/friend/request")
       .then((result) => {
         setReceivedRequests(result.data);
-        console.log(result);
       })
       .catch((error) => {
         console.log(error);
@@ -29,7 +25,6 @@ const FriendRequests = () => {
       .get("/friend/request/sent")
       .then((result) => {
         setSentRequests(result.data);
-        console.log(result);
       })
       .catch((error) => {
         console.log(error);
